@@ -1,0 +1,53 @@
+.heroes {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.heroes li {
+  cursor: pointer;
+  position: relative;
+}
+
+.heroes li:hover {
+  left: 0.1em;
+}
+
+.heroes a {
+  color: #393c3a;
+  text-decoration: none;
+  background-color: #d6dbdc;
+  margin: 0.5em;
+  padding: 0.3em 0;
+  height: 1.6em;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+}
+
+.heroes a:hover {
+  color: #393c3a;
+  background-color: #d6dbdc;
+}
+
+.heroes a:active {
+  background-color: #506c64;
+  color: #d2d7d9;
+}
+
+.heroes .badge {
+  display: inline-block;
+  font-size: small;
+  color: #d6dbdc;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color: #506c64;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  min-width: 16px;
+  text-align: right;
+  margin-right: 0.8em;
+  border-radius: 4px 0 0 4px;
+}
