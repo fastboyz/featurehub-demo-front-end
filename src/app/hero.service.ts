@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
+import { FeatureManagerService } from './feature-manager.service';
 import { Hero } from './hero';
 import { HEROES } from './mocks/mock-heroes';
+import { Features } from './features.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +20,12 @@ export class HeroService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private featureManager: FeatureManagerService
   ) {}
 
   getHeroes(): Observable<Hero[]> {
+    this.log(String(this.featureManager.isEnabled(Features.TEST)));
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
       tap((_) => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
