@@ -1,3 +1,3 @@
 export enum Features {
-  TEST = 'TEST',
+  SEARCH = 'SEARCH_FTGL',
 }
