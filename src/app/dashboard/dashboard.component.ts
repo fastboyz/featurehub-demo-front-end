@@ -13,6 +13,7 @@ import { MessageService } from '../message.service';
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
   isSeachActive: boolean = false;
+  date: Date = new Date('26 December 2021');
 
   constructor(
     private heroService: HeroService,
@@ -21,15 +22,23 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const fhClient = await this.featureManager.fhConfig.newContext().build();
+    const fhClient = await this.featureManager.fhConfig
+      .newContext()
+      .attribute_value('XMASS', this.dateToYearMonthDay(this.date))
+      .build();
+
     this.featureManager.fhConfig
       .repository()
       .feature(Features.SEARCH)
       .addListener(() => {
-       this.log(`Received new ${Features.SEARCH} with value: ${fhClient.isEnabled(Features.SEARCH)}`)
+        this.log(
+          `Received new ${Features.SEARCH} with value: ${fhClient.isEnabled(
+            Features.SEARCH
+          )}`
+        );
         this.isSeachActive = fhClient.isEnabled(Features.SEARCH);
       });
-      this.getHeroes();
+    this.getHeroes();
   }
 
   getHeroes(): void {
@@ -40,5 +49,21 @@ export class DashboardComponent implements OnInit {
 
   private log(message: string) {
     this.messageService.add(`Dashboard Component: ${message}`);
+  }
+
+  private dateToYearMonthDay(date: Date): string {
+    return (
+      date.getUTCFullYear() +
+      '/' +
+      ('0' + (date.getUTCMonth() + 1)).slice(-2) +
+      '/' +
+      ('0' + date.getUTCDate()).slice(-2) +
+      ' ' +
+      ('0' + date.getUTCHours()).slice(-2) +
+      ':' +
+      ('0' + date.getUTCMinutes()).slice(-2) +
+      ':' +
+      ('0' + date.getUTCSeconds()).slice(-2)
+    );
   }
 }
